@@ -1,0 +1,196 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int parent[100001];
+int setSize[100001];
+ 
+int s1, s2;
+
+vector<int> adj[100001];
+
+bool visited[20001];
+
+vector<pair<int, int> > edges;
+
+inline void init(int n){
+ 
+    for(int i=0;i<=20000;i++){
+        parent[i] = i;
+        setSize[i] = 1;        
+    }
+}
+ 
+inline int root(int i){
+ 
+    while(parent[i] != i){
+ 
+        parent[i] = parent[parent[i]];
+        i = parent[i];    
+    }
+ 
+    return i;
+}
+ 
+inline bool find(int a, int b){
+ 
+    return (root(a) == root(b));
+}
+ 
+inline void weightedUnion(int a, int b){
+ 
+    int root_A = root(a);
+    int root_B = root(b);
+ 
+    if(setSize[root_A] < setSize[root_B]){
+ 
+        setSize[root_B] += setSize[root_A];
+        parent[root_A] = parent[root_B];
+    }else{
+        setSize[root_A] += setSize[root_B];
+        parent[root_B] = parent[root_A];
+    }
+}
+ 
+inline void Union(int a, int b){
+ 
+    int root_A = root(a);
+    int root_B = root(b);
+ 
+    setSize[root_B] += setSize[root_A];
+    parent[root_A] = parent[root_B];
+ 
+}
+ 
+inline int subset(int a){
+ 
+    if(find(a, s1))return s1;
+    else if(find(a, s2))return s2;
+    else return 0;
+}
+
+inline void addEdge(int u, int v){
+    
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
+inline void dfs(int source){
+
+    visited[source] = true;
+    
+    for(int i=0;i<adj[source].size();i++){
+        
+        if(!visited[adj[source][i]]){
+            
+            pair<int, int> p;
+            p.first = source;
+            p.second = adj[source][i];
+            edges.push_back(p);
+            dfs(adj[source][i]);
+        }
+    }
+}
+
+inline int calc(){
+    
+    
+    if(edges.size() == 0){
+        return 0;
+    }
+    
+    for(int i=0;i<edges.size();i++){
+        
+        int a = edges[i].first;
+        int b = edges[i].second;
+        
+        
+        if(i==0){
+            s1 = a;
+            s2 = b;
+            
+        }else{
+
+            if(!subset(a) && !subset(b)){
+
+                Union(a, s2);
+                Union(b, s1);
+            
+            }else if(subset(a) && subset(b)){
+                
+                continue;
+                
+            
+            }else{
+
+                if(find(a, s1)){
+                    
+                    Union(b, s2);
+                
+                }else if(find(a, s2)){
+                    
+                    Union(b, s1);
+                
+                }else if(find(b, s1)){
+
+                    Union(a, s2);
+                
+                }else if(find(b, s2)){
+
+                    Union(a, s1);
+                }
+            }
+        }
+    }
+    
+    
+    
+    return max(setSize[s1], setSize[s2]);   
+}
+
+int main(){
+ 
+    int t;
+    scanf("%d", &t);
+ 
+    for(int k=1;k<=t;k++){
+ 
+        int n;
+        scanf("%d", &n);
+ 
+        int b, a;
+        int maxNodeNumber = -1;
+        for(int i=0;i<n;i++){
+            
+            scanf("%d %d", &a, &b);
+            addEdge(a, b);
+            
+            maxNodeNumber = max(maxNodeNumber, max(a, b));
+        }
+        
+        int ans = 0;
+        
+        for(int i=1;i<=maxNodeNumber;i++){
+            
+            if(!visited[i]){
+                
+                edges.clear();
+                dfs(i);
+                init(maxNodeNumber);
+                ans += calc();
+            }
+        }
+        
+        
+        cout<<"Case "<<k<<": "<<ans<<endl;
+        
+        //Resetting:
+        memset(visited, false, sizeof(visited));
+        edges.clear();
+        for(int i=0;i<=20000;i++){
+            adj[i].clear();
+        }
+ 
+    }
+ 
+    return 0;
+}
