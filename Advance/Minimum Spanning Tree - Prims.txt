@@ -1,0 +1,105 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int parent[1000001];
+int setSize[1000001];
+
+typedef struct node{
+    
+    int u;
+    int v;
+    int w;
+    
+}node;
+
+vector<node> edges;
+
+inline void init(){
+      
+    for(int i=0;i<=10000;i++){
+        parent[i] = i;
+        setSize[i] = 1;
+    }  
+}
+
+inline int root(int i){
+    
+    while(parent[i] !=  i){
+        
+        parent[i] = parent[parent[i]];
+        i = parent[i];
+    }
+    
+    return i;
+}
+
+inline void Union(int a, int b){
+    
+    int root_A = root(a);
+    int root_B = root(b);
+    
+    if(setSize[root_A] < setSize[root_B]){
+        
+        parent[root_A] = parent[root_B];
+        setSize[root_B] += setSize[root_A];
+        
+    }else{
+        
+        parent[root_B] = parent[root_A];
+        setSize[root_A] += setSize[root_B];
+    }
+}
+
+int find(int a, int b){
+    
+    return (root(a) == root(b));
+}
+
+bool func(const node& a, const node& b){
+    
+    if(a.w < b.w){
+        return true;
+    }
+    return false;
+}
+
+inline int kruskal(){
+    
+    sort(edges.begin(), edges.end(), func);
+    int ans = 0;
+    
+    init();
+    for(int i=0;i<edges.size();i++){
+        
+        node p = edges[i];
+        if(!find(p.u, p.v)){
+            
+            Union(p.u, p.v);
+            ans += p.w;
+        }
+    }
+    
+    return ans;
+}
+
+int main(){
+    
+        
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    int u, v, w;
+    for(int i=0;i<m;i++){
+    
+        scanf("%d %d %d", &u, &v, &w);
+        node p;
+        p.u = u;
+        p.v = v;
+        p.w = w;
+        edges.push_back(p);
+    }
+    
+    cout<<kruskal();
+    
+    return 0;
+}
