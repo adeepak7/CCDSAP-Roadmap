@@ -1,0 +1,97 @@
+//Always take care of multiple edges between 2 nodes. Always take the minimum edge weight.
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> adj[1000001];
+map<pair<int, int >, int> mp;
+
+inline void addEdge(int u, int v, int w){
+    
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+    
+    if(mp.find(make_pair(u, v)) == mp.end()){
+        mp[make_pair(u, v)] = w;
+        mp[make_pair(v, u)] = w;
+    }else{
+        mp[make_pair(u, v)] = min(mp[make_pair(u, v)], w);
+        mp[make_pair(v, u)] = min(mp[make_pair(v, u)], w);;
+    }
+}
+
+bool visited[1000001] = {false};
+
+typedef struct node{
+    
+    int u, w;
+    
+    bool operator < (const node& n)const{
+        
+        if(n.w < w){
+            return true;
+        }  
+        return false;
+    }
+    
+}node;
+
+priority_queue<node> que;
+
+inline int prims(int source){
+    
+    int ans = 0;
+    
+    node p;
+    p.u = source;
+    p.w = 0;
+    
+    que.push(p);
+    
+    while(!que.empty()){
+        
+        node popedNode = que.top();
+        que.pop();
+        
+        //cout<<"PopedNode: "<<popedNode.u<<endl;
+        
+        if(visited[popedNode.u]){
+            continue;
+        }
+        
+        visited[popedNode.u] = true;
+        ans += popedNode.w;    
+        
+        for(int i=0;i<(int)adj[popedNode.u].size();i++){
+            
+            if(!visited[adj[popedNode.u][i]]){
+                node newNode;
+                newNode.u = adj[popedNode.u][i];
+                
+                newNode.w = mp[make_pair(popedNode.u, newNode.u)];
+                
+                que.push(newNode);
+            }
+        }
+    }
+    return ans;
+}
+
+int main(){
+    
+    int n, m;
+    scanf("%d %d", &n, &m);
+    
+    int u, v, w;
+    int source;
+    for(int i=0;i<m;i++){
+    
+        scanf("%d %d %d", &u, &v, &w);
+        addEdge(u, v, w);
+        source = u;
+    }
+    
+    cout<<prims(source);
+    
+    return 0;
+}
