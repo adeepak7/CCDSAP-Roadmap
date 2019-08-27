@@ -1,0 +1,111 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long int LL;
+
+int n, m;
+
+map<pair<int, int>, int> mp;
+
+vector<int> adj[1001];
+
+const LL INF = (LL)1e15;
+
+LL dist[1001] = {INF};
+
+int parent[1001] = {-1};
+
+vector<pair<int, int> >edges;
+
+inline void addEdge(int u, int v, int w){
+    
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+    
+    if(mp.find(make_pair(u, v)) == mp.end()){
+        mp[make_pair(u, v)] = w;
+        mp[make_pair(v, u)] = w;
+        edges.push_back(make_pair(u, v));
+    }else{
+        mp[make_pair(u, v)] = min(mp[make_pair(u, v)], w);
+        mp[make_pair(v, u)] = min(mp[make_pair(v, u)], w);
+    }
+    
+}
+
+inline void bellmanFord(int source){
+    
+    dist[source] = 0;
+    parent[source] = 0;
+    
+    for(int i=1;i<n;i++){
+        dist[i] = INF;
+        parent[i] = -1;
+    }
+    
+        
+    for(int i=0;i<n-1;i++){
+    
+        for(int j=0;j<edges.size();j++){
+            
+            pair<int, int> p = edges[j];
+            
+            int v = p.second;
+            int u =p.first;
+            if(dist[v] > dist[u]+mp[p]){
+                
+                dist[v] = dist[u] + mp[p];
+                parent[v] = u;
+            }
+        }
+    }
+}
+
+
+int main(){
+    
+    int t;
+    scanf("%d", &t);
+    
+    while(t--){
+    
+        scanf("%d %d", &n, &m);
+        
+        for(int i=0;i<m;i++){
+            
+            int u, v, w;
+            scanf("%d %d %d", &u, &v, &w);
+            addEdge(u,v,w);
+        }
+        
+        bellmanFord(0);
+        
+        //Check for Negative Weight Cycle:
+        bool ans = false;
+        for(int j=0;j<edges.size();j++){
+                
+            pair<int, int> p = edges[j];
+            
+            int v = p.second;
+            int u =p.first;
+            if(dist[v] > dist[u]+mp[p]){
+                
+                dist[v] = dist[u] + mp[p];
+                parent[v] = u;
+                ans = true;
+                break;
+            }
+        }
+        
+        cout<<((ans)? "1" : "0") << endl;
+    
+        //Resetting:
+        mp.clear();
+        for(int i=0;i<=n+1;i++){
+            
+            adj[i].clear();
+        }
+        edges.clear();
+    }
+    
+    return 0;
+}
