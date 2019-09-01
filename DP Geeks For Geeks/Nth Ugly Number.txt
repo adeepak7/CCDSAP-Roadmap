@@ -1,0 +1,45 @@
+class Solution {
+public:
+    
+    int arr[100000];
+    
+    int nthUglyNumber(int n) {
+    
+        arr[0] = 1;
+        
+        if(n==1){
+            return 1;
+        }
+        
+        int two = 2;
+        int three = 3;
+        int five = 5;
+        
+        int i2 = 0;
+        int i3 = 0;
+        int i5 = 0;
+        
+        for(int i=1;i<n;i++){
+            
+            arr[i] = min(two, min(three, five));
+            
+            if(arr[i] == two){
+                
+                i2++;
+                two = arr[i2]*2;
+            }
+            if(arr[i] == three){
+                
+                i3++;
+                three = arr[i3]*3;
+            }
+            if(arr[i] == five){
+                
+                i5++;
+                five = arr[i5]*5;
+            }
+        }
+        
+        return arr[n-1];
+    }
+};
