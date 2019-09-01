@@ -1,0 +1,116 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int parent[1000001];
+
+int low[1000001];
+
+int dt[1000001];
+
+bool visited[1000001];
+
+int n, m;
+
+vector<int> adj[1000001];
+
+set<int> artiPoints;
+
+set<pair<int, int>> bridges;
+
+int ttime = 0;
+
+inline void addEdge(int u, int v){
+    
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
+inline void articulationPoint(int source){
+    
+   
+    visited[source] = true;
+    
+    dt[source] = low[source] = ttime++;
+    
+    int child = 0;
+    
+    for(int i=0;i<adj[source].size();i++){
+        
+        if(!visited[adj[source][i]]){
+            
+            child = child + 1;
+            
+            parent[adj[source][i]] = source;
+            
+            articulationPoint(adj[source][i]);
+            
+            low[source] = min(low[source], low[adj[source][i]]);
+            
+            if( (parent[source] == -1) && (child > 1) ){
+                
+                artiPoints.insert(source);
+            } 
+            
+            if( (parent[source] != -1) && (low[adj[source][i]] >= dt[source]) ){
+                
+                artiPoints.insert(source);
+            }
+            
+            if(low[adj[source][i]] > dt[source]){
+                
+                bridges.insert(make_pair(source, adj[source][i]));
+            }
+            
+        }else if(parent[source] != adj[source][i]){
+            
+            low[source] = min(low[source], dt[adj[source][i]]);
+        }
+    }
+    
+    //cout<<"Source: "<<source<<" ";
+    //cout<<"Low: "<<low[source]<<" dt: "<<dt[source]<<endl;
+}
+
+int main(){
+    
+    scanf("%d %d", &n, &m);
+    
+    int u, v;
+    for(int i=0;i<m;i++){
+        
+        scanf("%d %d", &u, &v);
+        
+        addEdge(u, v);
+    }
+   
+     
+    int source = 0;
+    
+    //Setting parent to -1
+    
+    for(int i=0;i<=n;i++){
+        parent[i] = -1;
+    }
+    
+    articulationPoint(source);
+    
+    cout<<artiPoints.size()<<endl;
+    
+    set<int>::iterator it = artiPoints.begin();
+    
+    for(it; it!=artiPoints.end();it++){
+        cout<<*it<<" ";
+    }
+    cout<<endl;
+    
+    cout<<bridges.size()<<endl;
+    
+    set<pair<int, int> >::iterator it1 = bridges.begin();
+    
+    for(it1; it1!=bridges.end();it1++){
+        cout<<min((*it1).first,(*it1).second)<<" "<<max((*it1).first,(*it1).second)<<endl;
+    }
+    
+    
+    return 0;
+}
