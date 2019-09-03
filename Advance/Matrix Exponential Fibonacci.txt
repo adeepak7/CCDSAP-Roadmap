@@ -1,0 +1,153 @@
+/*
+    Notes:
+
+    1) Fibonacci:    
+      
+        | 0 1 |^k  | f(x)   | = | f(x+k)   |
+        | 1 1 |    | f(x+1) |   | f(x+1+k) |
+        
+        | 0 1 | = M
+        | 1 1 |
+        
+        | 0 1 |^d = | 0 1 |^(d-1) * M
+        | 1 1 |     | 1 1 |         
+    
+    2) Normal Matrix Multiplication Code: (Takes n^3)
+        
+        int a[2][2] = {{1,2}, {3,4}};
+        int b[2][2] = {{1,2}, {3,4}};
+        int ans[2][2] = {{0,0}, {0,0}};
+        
+        for(int rowA=0;rowA<2;rowA++){
+            
+            for(int colB=0;colB<2;colB++){
+                
+                int tmp = 0;
+                for(int id=0;id<2;id++){
+                    
+                    tmp += a[rowA][id] * b[id][colB];         
+                }
+                ans[rowA][colB] = tmp;
+            }
+        }
+        
+        for(int i=0;i<2;i++){
+            for(int j=0;j<2;j++){
+                cout<<ans[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long int LL;
+
+const LL MOD = (LL)((LL)(1e9) + 7LL);
+
+inline long long int** multiply(LL** a, LL** b){
+
+    LL** ans = new LL*[3]; 
+    
+    for(int i=0;i<3;i++){
+        ans[i] = new LL[3];    
+    }
+    for(int i=0;i<2;i++){
+        
+        for(int j=0;j<2;j++){
+            
+            ans[i][j] = 0;
+        }    
+    }
+    
+    for(int rowA=0;rowA<2;rowA++){
+        
+        for(int colB=0;colB<2;colB++){
+            
+            LL tmp = 0;
+            for(int id=0;id<2;id++){
+                
+                tmp = (tmp + (a[rowA][id] * b[id][colB])%MOD)%MOD;         
+            }
+            ans[rowA][colB] = tmp;
+        }
+    }
+    return ans;
+}
+
+inline long long int** matrixPow(LL** a, LL n){
+    
+    LL** result = new LL*[3]; 
+    
+    for(int i=0;i<3;i++){
+        result[i] = new LL[3];    
+    }
+    
+    result[0][0] = 1;
+    result[0][1] = 0;
+    result[1][0] = 0;
+    result[1][1] = 1;
+    
+    while(n>0){
+        
+        if(n&1){
+            
+            result = multiply(result, a);
+        }
+        
+        a = multiply(a, a);
+        
+        n /= 2LL;
+    }
+    
+    return result;
+}
+
+int main(){
+    
+    long long int n;
+    scanf("%lld", &n);
+    
+    if(n==1){
+        cout<<0<<endl;
+        return 0;
+    }
+    if(n==2){
+        cout<<1<<endl;
+        return 0;
+    }
+    
+    n-=2LL;
+    
+    LL** a = new LL*[3]; 
+    
+    for(int i=0;i<3;i++){
+        a[i] = new LL[3];    
+    }
+    
+    a[0][0] = 0;
+    a[0][1] = 1;
+    a[1][0] = 1;
+    a[1][1] = 1;
+    
+    /*for(int i=0;i<2;i++){
+        for(int j=0;j<2;j++){
+            
+            cout<<ans[i][j]<<" ";
+        }
+        cout<<endl;
+    }*/
+    
+    LL** ans;
+    /*for(int i=1;i<10;i++){
+        ans = matrixPow(a, i);
+        cout<<ans[1][1]<<endl;
+    }*/
+    
+    ans = matrixPow(a, n);
+    cout<<ans[1][1]<<endl;
+    
+    return 0;
+}
