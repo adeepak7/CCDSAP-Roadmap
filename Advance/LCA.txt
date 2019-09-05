@@ -1,0 +1,140 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const int level = 20;
+const int maxn = 100000;
+
+int n;
+
+vector<int> adj[100001];
+
+int parent[maxn][level];
+
+int depth[maxn];
+
+bool visited[maxn];
+
+inline void dfs(int u, int parentU){
+    
+    visited[u] = true;
+    
+    parent[u][0] = parentU;
+    
+    if(u>0){
+        depth[u] = depth[parentU]+1;
+    }
+    
+    for(int i=0;i<adj[u].size();i++){
+        
+        if(!visited[adj[u][i]]){
+            
+            dfs(adj[u][i], u);
+        }
+    }
+}
+
+inline void sparseTable(){
+    
+    for(int i=1;i<level;i++){
+        
+        for(int j=1;j<n;j++){
+            
+            if(parent[j][i-1] != -1){
+                
+                parent[j][i] = parent[parent[j][i-1]][i-1];
+            }
+        }
+    }
+}
+
+inline int lca(int u, int v){
+    
+    if(depth[v] < depth[u]){
+        int tmp = v;
+        v = u;
+        u = tmp;
+    }  
+    
+    int diff = depth[v] - depth[u];
+    
+    for(int i=0;i<level;i++){
+        
+        if((diff>>i) & 1){
+            v = parent[v][i];
+        }
+    }
+    
+    if(u==v){
+        return u;
+    }
+    
+    for(int i=level-1;i>=0;i--){
+        
+        if(parent[u][i] != parent[v][i]){
+            
+            u = parent[u][i];
+            v = parent[v][i];
+        }
+    }
+    
+    return parent[u][0];
+}
+
+inline void addEdge(int u, int v){
+    
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
+
+int main(){
+    
+    scanf("%d", &n);
+    
+    int v;
+    for(int i=1;i<n;i++){
+        
+        scanf("%d", &v);
+        
+        addEdge(i, v);
+    }
+    
+    for(int i=0;i<maxn;i++){
+        for(int j=0;j<level;j++){
+            parent[i][j] = -1;
+        }
+    }
+    
+    depth[0] = 0;
+    
+    dfs(0, -1);
+    
+    sparseTable();
+    
+    /*for(int i=0;i<n;i++){
+        
+        for(int j=0;j<7;j++){
+            
+            cout<<parent[i][j]<<" ";
+        }
+        cout<<endl;
+    }*/
+    
+    int q;
+    scanf("%d", &q);
+    
+    int ans;
+    
+    for(int i=0;i<q;i++){
+        int x;
+        scanf("%d", &x);
+        if(i==0){
+            ans = x;
+        }
+        ans = lca(ans, x);
+    }
+    
+    printf("%d\n", ans);
+    
+    return 0;
+}
