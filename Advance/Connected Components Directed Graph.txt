@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long int LL;
+
+int n, m;
+vector<int> adj[100001];
+vector<int> adjT[100001];
+
+bool visited[100001];
+bool visitedT[100001];
+
+stack<int> stk;
+
+inline void addEdge(int u, int v){
+    
+    adj[u].push_back(v);
+    adjT[v].push_back(u);
+}
+
+set<int> s;
+
+inline void dfs(int source){
+    
+    visited[source] = true;
+    
+    for(int i=0;i<adj[source].size();i++){
+        
+        if(!visited[adj[source][i]]){
+            dfs(adj[source][i]);
+        }
+    }
+    stk.push(source);
+}
+
+inline void connectedComponents(int source){
+    
+    visitedT[source] = true;
+    s.insert(source);
+    
+    for(int i=0;i<adjT[source].size();i++){
+        
+        if(!visitedT[adjT[source][i]]){
+            connectedComponents(adjT[source][i]);
+        }
+    }
+}
+
+
+int main(){
+    
+    scanf("%d %d", &n, &m);
+    int u, v;
+    for(int i=0;i<m;i++){
+        
+        scanf("%d %d", &u, &v);
+        addEdge(u,v);
+    }
+    
+    
+    for(int i=1;i<=n;i++){
+        
+        if(!visited[i]){
+            dfs(i);
+        }
+    }
+    
+    int C = 0, D = 0;
+    
+    while(!stk.empty()){
+        
+        int top = stk.top();
+        stk.pop();
+        s.clear();
+        if(!visitedT[top]){
+            connectedComponents(top);
+        }
+        if(s.size() & 1){
+            
+            C += s.size(); 
+        }else{
+            D += s.size();
+        }
+    }
+    
+    cout<<C-D<<endl;
+    
+    return 0;
+}

@@ -1,0 +1,43 @@
+class Solution {
+public:
+    
+    bool visited[100001];
+    vector<int> adj[100001];
+    
+    void addEdge(int u, int v){
+        
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+    inline void dfs(int source){
+        
+        visited[source] = true;
+        
+        for(int i=0;i<adj[source].size();i++){
+            
+            if(!visited[adj[source][i]]){
+                dfs(adj[source][i]);
+            }
+        }
+    }
+    
+    int countComponents(int n, vector<vector<int>>& edges) {
+        
+        int cnt = 0;
+        for(int i=0;i<edges.size();i++){
+            
+            addEdge(edges[i][0],edges[i][1]);
+        }
+        
+        for(int i=0;i<n;i++){
+            
+            if(!visited[i]){
+                dfs(i);
+                cnt++;
+            }
+        }
+        
+        return cnt;
+    }
+};
