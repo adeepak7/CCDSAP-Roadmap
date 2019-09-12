@@ -5,6 +5,8 @@
 	- What is it => single source shortest path
 	- brute force by considering all paths(eg. of exponential number of paths from source to destnation)
 	- Why we use priority queues
+		- Operations required: Contains Key=O(1), insert = O(log(v)), extract min = O(log(v)), decrease key = O(log(v)) 
+
 	- significance of weight = 0 and weight < 0
 	- Intuition of water droplet falling in water(why bfs applies)
 	- Can work for negative weights, but not always
@@ -19,6 +21,7 @@
 	
 	- Greedy algorithm and mechanical explanation
 	- Proof of Induction
+	- Time complexity : V + E*log(V) => log(V) for insert and decrease key
 	- Applications
 
 3) Mathematical Induction:
