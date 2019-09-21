@@ -1,0 +1,190 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+const int SIZE = (int)((int)4e5 + 100);
+ 
+typedef struct pack{
+    
+    int oddCnt = 0;
+    int evenCnt = 0;
+    int currNum = -1;
+    
+}pack;
+ 
+int A[SIZE];
+pack lazy[SIZE];
+pack tree[SIZE];
+ 
+inline void build(int node, int start, int end){
+    
+    if(start == end){
+        
+        if(A[start]&1){
+            
+            pack p;
+            p.oddCnt = 1;
+            p.evenCnt = 0;
+            tree[node] = p;
+        }else{
+            pack p;
+            p.oddCnt = 0;
+            p.evenCnt = 1;
+            tree[node] = p;
+        }
+    }
+    else{
+        
+        int mid = (start+end)/2;
+        
+        build(2*node, start, mid);
+        
+        build(2*node+1, mid+1, end);
+        
+        tree[node].oddCnt = tree[2*node].oddCnt + tree[2*node + 1].oddCnt;
+        tree[node].evenCnt = tree[2*node].evenCnt + tree[2*node + 1].evenCnt;
+        lazy[node].currNum = -1;
+    }
+}
+ 
+void update(int node, int start, int end, int l, int r, int val){
+    
+    if(lazy[node].currNum != -1){
+        
+        if(lazy[node].currNum & 1){
+            
+            //Updating the tree node first
+            tree[node].oddCnt += tree[node].evenCnt;
+            tree[node].evenCnt = 0;
+        }else{
+            tree[node].evenCnt += tree[node].oddCnt;
+            tree[node].oddCnt = 0;
+        }
+        
+        if(start!=end){
+            
+            lazy[2*node].currNum = lazy[node].currNum;
+            lazy[2*node + 1].currNum = lazy[node].currNum;
+            
+        }
+        lazy[node].currNum = -1;
+    }   
+    
+    if(start>end || l>end || start>r){
+        return;
+    }
+    
+    if(start>=l && end<=r){
+        //cout<<"Node:"<<node<<" "<<start<<" "<<end<<endl;
+        if(val & 1){
+            //Updating the tree node first
+            tree[node].oddCnt += tree[node].evenCnt;
+            tree[node].evenCnt = 0;
+        }else{
+            tree[node].evenCnt += tree[node].oddCnt;
+            tree[node].oddCnt = 0;
+        }
+        if(start!=end){
+            lazy[2*node].currNum = val;
+            lazy[2*node + 1].currNum = val;
+            
+        }
+        lazy[node].currNum = -1;
+        return;
+    }
+    
+    int mid = (start+end)/2;
+    update(2*node, start, mid, l, r, val);
+    update(2*node+1, mid+1, end, l, r, val);
+    
+    tree[node].oddCnt = tree[2*node].oddCnt + tree[2*node+1].oddCnt;
+    tree[node].evenCnt = tree[2*node].evenCnt + tree[2*node+1].evenCnt;
+}
+ 
+inline pack query(int node, int start, int end, int l, int r){
+   
+    if(start>end || start>r || end<l){
+        pack p;
+        p.oddCnt = 0;
+        p.evenCnt = 0;
+        return p;
+    }
+    
+    if(lazy[node].currNum != -1){
+        
+        if(lazy[node].currNum & 1){
+            
+            tree[node].oddCnt += tree[node].evenCnt;
+            tree[node].evenCnt = 0;
+        }else{
+            tree[node].evenCnt += tree[node].oddCnt;
+            tree[node].oddCnt = 0;
+        }
+        if(start!=end){
+            
+            lazy[2*node].currNum = lazy[node].currNum;
+            lazy[2*node + 1].currNum = lazy[node].currNum;
+            
+        }
+        lazy[node].currNum = -1;
+    }
+    
+    if(start>=l && end<=r){
+        return tree[node];
+    }
+    
+    int mid = (start+end)/2;
+    pack n1 = query(2*node, start, mid, l, r);
+    pack n2 = query(2*node + 1, mid+1, end, l, r);
+    
+    pack p;
+    p.oddCnt = n1.oddCnt + n2.oddCnt;
+    p.evenCnt = n1.evenCnt + n2.evenCnt;
+    return p;
+}
+ 
+int main(){
+    
+    int n;
+    scanf("%d", &n);
+    
+    for(int i=1;i<=n;i++){
+        
+        scanf("%d", &A[i]);    
+    }
+    
+    build(1, 1, n);
+    
+    int q;
+    scanf("%d", &q);
+    
+    while(q--){
+        
+        int opt;
+        scanf("%d", &opt);
+        
+        if(opt == 0){
+            
+            int idx, val;
+            scanf("%d %d", &idx, &val);
+            update(1, 1, n, idx, idx, val);
+            
+            /*for(int i=0;i<=24;i++){
+                cout<<"I: "<<i<<" Odd:"<<tree[i].oddCnt<<" Even:"<<tree[i].evenCnt<<endl;
+            }*/
+        }else{
+            
+            int l, r;
+            scanf("%d %d", &l, &r);
+            
+            pack ans = query(1, 1, n, l, r);
+            
+            if(opt == 1){
+                cout<<ans.evenCnt<<endl;
+            }else{
+                cout<<ans.oddCnt<<endl;
+            }
+        }
+    }
+    
+    return 0;
+}

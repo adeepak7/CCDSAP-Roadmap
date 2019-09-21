@@ -1,0 +1,409 @@
+
+<!-- saved from url=(0077)http://www.mathcs.emory.edu/~cheung/Courses/323/Syllabus/Graph/dijkstra3.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><meta http-equiv="expires" content="0">
+
+
+
+<style type="text/css">
+table {font-size: 100%;}
+</style>
+</head>
+
+<body text="#000000" link="#00ff00" vlink="#f00000" bgcolor="#ffffff">
+
+<h3>
+<hr>
+Correctness proof of Dijkstra's Algorithm
+<hr>
+</h3>
+<ul>
+<p>
+</p><li> <font color="darkmagenta"><b>
+     Proof of correctness: Dijkstra's Algorithm
+     </b></font>
+<p>
+ </p><ul>
+ <li> <b>Notations:</b>
+<p>
+</p><ul>
+<table bgcolor="lightgreen" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="red"><b>D(S,u)</b></font> =
+       the <font color="blue"><b>minimum distance</b></font>
+       computed by  <font color="red"><b>Dijkstra's algorithm</b></font>
+       between <b>nodes S and u</b>
+       
+<p>
+ </p></li><li> <font color="red"><b>d(S,u)</b></font> =
+       the <font color="red"><b><i>actual</i></b></font>
+      <font color="blue"><b> minimum distance</b></font>
+       between <b>nodes S and u</b>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+
+
+
+ </p></li><li> <b>Proposition 13.23 (Goodrich)</b>
+<p>
+</p><ul>
+<table bgcolor="mistyrose" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> In <font color="blue"><b>Dijkstra's Algorithm</b></font>,
+     when (<font color="magenta"><b>at the moment that</b></font>) 
+    a <b>vertex <i>u</i></b> is
+     <font color="red"><b>included</b></font> into the
+     <font color="darkmagenta"><b>ReachedSet</b></font>, 
+     we have that:
+<p>
+</p><ul>
+<table bgcolor="yellow" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="red"><b>D(S,u) = d(S,u)</b></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+<b>Proof:</b> (by <font color="red"><b>contradiction</b></font>)
+</p><p>
+</p><ul>
+<table bgcolor="lightcyan" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> Suppose the <b>statement</b> is
+      <font color="blue"><b>false</b></font>
+ <p>
+ </p></li><li> Then there are <font color="blue"><b>some vertices</b></font>
+      where
+      when (<font color="magenta"><b>at the moment that</b></font>) 
+    a <b>vertex <i>u</i></b> is
+     <font color="red"><b>included</b></font> into the
+     <font color="darkmagenta"><b>ReachedSet</b></font>:
+
+<p>
+</p><ul>
+<table bgcolor="yellow" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="red"><b>D(S,u) &gt; d(S,u)</b></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> Let <font color="blue"><b><i>x</i></b></font> = the
+    <font color="red"><b>first</b></font> of these <b>vertices</b>
+    that was <font color="darkmagenta"><b>included</b></font> into
+    the <b>ReachSet</b>
+ <p>
+ In other words:
+</p><p>
+</p><ul>
+<table bgcolor="khaki" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="blue"><b><i>x</i></b></font> = the
+    <font color="red"><b><i>first</i> vertex</b></font> 
+    such that
+    when (<font color="magenta"><b>at the moment that</b></font>) 
+    <b>vertex <i>x</i></b> is
+     <font color="red"><b>included</b></font> into the
+     <font color="darkmagenta"><b>ReachedSet</b></font>:
+
+<p>
+</p><ul>
+<table bgcolor="yellow" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="red"><b>D(S,x) &gt; d(S,x)</b></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> This <font color="blue"><b>implies</b></font> that
+     <font color="magenta"><b>all <i>previous</i> vertices z</b></font> that
+     were  <font color="red"><b>included</b></font> into the
+     <font color="darkmagenta"><b>ReachedSet</b></font>, that:
+
+<p>
+</p><ul>
+<table bgcolor="lightgreen" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="red"><b>D(S,z) = d(S,z)</b></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> Let's look at the <font color="blue"><b>moment</b></font>
+    when this <font color="red"><b>node <i>x</i></b></font> is
+    included into the
+    <font color="darkmagenta"><b>ReachedSet</b></font>
+<p>
+ <b>Denote:</b>
+</p><p>
+</p><ul>
+<table bgcolor="mistyrose" border="5">
+<tbody><tr> <td>
+
+ <ul>
+<li> The <font color="blue"><b><i>P</i></b></font> be
+    the <font color="red"><b>(real) shortest path</b></font>
+    from <b>S</b> to <font color="blue"><b><i>x</i></b></font>
+<p>
+</p></li><li> Let <font color="blue"><b><i>z</i></b></font> = the
+    <font color="darkmagenta"><b><i>first</i> vertex</b></font>
+    that is <font color="red"><b><i>not</i> in the "ReachSet"</b></font>
+    and is
+    on the <font color="blue"><b>shortest path</b></font>
+<p>
+</p></li><li> Let <font color="blue"><b><i>y</i></b></font> = the
+    <font color="darkmagenta"><b>predecessor vertex</b></font>
+   of <font color="red"><b><i>z</i></b></font> on the
+   <b>shortest path <i>P</i></b>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><p>
+<b>Graphical depiction of the situation:</b>
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="./dijkstra3_files/weight05.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> We can conclude the following:
+<p>
+</p><ul>
+<table bgcolor="lightgreen" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="red"><b>D(S,y) = d(s,y)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+....... (1)
+</b></font>
+ <p>
+   (The <font color="blue"><b>min. distance S &#8658; y</b></font> 
+  <b>computed
+   by the algorithm</b> = <font color="red"><b>actual min. distance
+   S &#8658; y</b></font> because
+   <font color="blue"><b><i>y</i></b></font> in
+   included <font color="darkmagenta"><b>before <i>x</i></b></font>)
+</p><p>
+</p><hr>
+<p>
+ </p></li><li> <font color="red"><b>D(S,z) = D(S,y) + linkcost(y,z)</b></font>
+ <p>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <font color="red"><b>= d(s,y) + linkcost(y,z)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+....... (2)
+</b></font>
+</p><p>
+</p><hr>
+<p>
+</p></li><li> <font color="red"><b>D(S,x) &#8804; D(S,z)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+....... (3) 
+</b></font>
+ <p>
+  (Because the <font color="blue"><b>next vertex</b></font> included
+   by the <b><i>algorithm</i></b> is 
+   <font color="red"><b>vertex <i>x</i></b></font>)
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> <b>Improtant fact:</b>
+<p>
+</p><ul>
+<table bgcolor="mistyrose" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> A <font color="blue"><b>sub path</b></font> of a
+    <b><i>shortest path</i></b> is <b>itself</b>
+    a <font color="red"><b>shortest path</b></font>
+ <p>
+ <b>I.e.:</b>
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="./dijkstra3_files/weight06.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+<font color="red"><b>shortest path "S &#8594; x"</b></font> 
+   <font color="blue"><b>=</b></font>
+  <font color="red"><b>shortest path "S &#8594; z"</b></font> 
+  &nbsp; <font color="blue"><b>&#8746;</b></font> &nbsp;
+  <font color="red"><b>shortest path "z &#8594; x"</b></font>
+</p><p>
+</p><hr>
+<p>
+</p></li><li> Therefore:
+<p>
+</p><ul>
+<table bgcolor="yellow" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="blue"><b>
+        d(S,x) &nbsp; = &nbsp;
+	d(S,z) + d(z,x)
+	</b></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+
+
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+</p><p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> We can now conclude that:
+<p>
+</p><ul>
+<table bgcolor="khaki" border="5">
+<tbody><tr> <td>
+
+<font color="blue">
+<b>
+<pre>    D(S,x) &#8804; D(S,z)                        ............. (3)      
+
+           = d(s,y) + linkcost(y,z)            (Equation (2))
+
+           &#8804; d(S,y) + linkcost(y,z) <font color="red">+ d(z,x)</font>
+
+           = <font color="red">d(S,x)</font>
+</pre>
+</b>
+</font>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> Ths <b>result</b> is a <font color="red"><b>contradiction</b></font>
+     to the <font color="blue"><b>assumption</b></font>:
+<p>
+</p><ul>
+<table bgcolor="yellow" border="5">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="red"><b>D(S,x) &gt; d(S,x) </b></font>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+Therefore, the assumption that
+  "the <b>statement</b> <font color="darkmagenta"><b>false</b></font>"
+ is <font color="red"><b>false</b></font>
+</p><p>
+ The <b>statement</b> must be <font color="blue"><b>true</b></font>
+
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+<p>
+</p></li></ul>
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+
+</body></html>
