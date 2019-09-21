@@ -1,0 +1,122 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+const int SIZE = (int)((int)4e6 + 100);
+ 
+int tree[SIZE];
+int lazy[SIZE];
+ 
+vector<int> vec;
+ 
+inline void update(int node, int start, int end, int l, int r, int val){
+ 
+    //Return Codition
+    if(start>end || start>r || l>end){
+        return;
+    }
+ 
+    //Lazy Condition
+    if(lazy[node] != 0){
+        
+        tree[node] += (end - start + 1) * lazy[node];
+        
+        if(start!=end){
+            
+            lazy[2*node] += lazy[node];
+            lazy[2*node+1] += lazy[node];
+        }
+        lazy[node] = 0;
+    }   
+    
+    //Overlap Condition
+    if(l<=start && r>=end){
+        
+        tree[node] += (end-start+1)*val;
+        
+        if(start!=end){
+            
+            lazy[2*node] += val;
+            lazy[2*node+1] += val;
+        }
+        return;
+    }
+    
+    int mid = (start+end)/2;
+    
+    update(2*node, start, mid, l, r, val);
+    update(2*node+1, mid+1, end, l, r, val);
+    
+    tree[node] = tree[2*node] + tree[2*node+1];
+ 
+}
+ 
+//Down Propagation
+void query(int node, int start, int end, int l, int r){
+    
+    if(start>end || start>r || l>end){
+        return;
+    }
+ 
+    if(lazy[node]!=0){
+        
+        tree[node] += (end - start + 1)*lazy[node];
+        
+        if(start != end){
+            
+            lazy[2*node] += lazy[node];
+            lazy[2*node + 1] += lazy[node];
+        }
+        lazy[node] = 0;
+    }
+    
+    if(start>=l && r>=end){
+        
+        //Do nothing for DOWN Propagation
+    }
+    
+    //Most important: Collect leaves
+    if(start == end){
+        vec.push_back(tree[node]);
+        return;
+    }
+    
+    int mid = (start + end)/2;
+    query(2*node, start, mid, l, r);
+    query(2*node+1, mid+1, end, l, r);
+    
+    tree[node] = tree[2*node] + tree[2*node+1];
+    
+}
+ 
+int main(){
+    
+    int n;
+    scanf("%d", &n);
+    
+    int opt;
+    scanf("%d", &opt);
+    int l, r;
+    for(int i=0;i<opt;i++){
+        
+        scanf("%d %d", &l, &r);
+        
+        update(1, 1, n, l, r, 1);
+    }
+    
+    query(1, 1, n, 1, n);
+    
+    sort(vec.begin(), vec.end());
+ 
+    int q;
+    scanf("%d", &q);
+    
+    int x;
+    while(q--){
+ 
+        scanf("%d", &x);
+        
+        printf("%d\n", n - (lower_bound(vec.begin(), vec.end() , x) - vec.begin()));
+    }
+ 
+    return 0;
+}
