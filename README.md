@@ -10,6 +10,9 @@
   <a href="">
     <img src="http://hits.dwyl.io/adeepak7/CCDSAP-Roadmap.svg" alt="Hit Counter">
   </a>
+  <a href="https://join.slack.com/t/acseswcesangli/shared_invite/enQtNzYxMzg2Nzk1Mjk5LTk5Yjg0NzJlNjM5NDQwOTlmMDMyNzRiNzM3OWFiNGMzMmUxMzRkN2NmYTUyM2E1ZDRkYzI0NmU2NDdmYTA1ZTA">
+    <img src="https://img.shields.io/badge/slack-@acses-yellow.svg?logo=slack" alt="Join the chat on Slack">
+  </a>  
 </p>
 A roadmap to crack Codechef Certified Data Structure and Algorithms Programme
 
