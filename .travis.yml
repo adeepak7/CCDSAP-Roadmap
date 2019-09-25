@@ -5,4 +5,4 @@ compiler:
 os:
 - linux
 script:
-- g++ -o out -I . -I ./Advance *.cpp Advance/*.cpp
+- g++ -c Advance/*.cpp
