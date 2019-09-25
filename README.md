@@ -2,7 +2,7 @@
 <p align="center">
   <img src="https://travis-ci.com/adeepak7/CCDSAP-Roadmap.svg?branch=master" alt="Build Status">
   <a href="https://github.com/adeepak7/CCDSAP-Roadmap/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+    <img src="https://img.shields.io/github/license/adeepak7/CCDSAP-Roadmap" alt="License">
   </a>
   <a href="https://www.linkedin.com/in/deepak-ahire-856534113/">
     <img src="https://img.shields.io/badge/ask%20me-anything-blue" alt="LinkedIn Profile">
