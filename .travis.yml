@@ -1,8 +1,8 @@
 sudo: false
 language: cpp
 compiler:
-	- gcc
+- gcc
 os:
-	- linux
+- linux
 script:
-	- g++ -o out -I . -I ./Advance *.cpp Advance/*.cpp
+- g++ -o out -I . -I ./Advance *.cpp Advance/*.cpp
