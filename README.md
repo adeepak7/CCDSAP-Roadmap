@@ -7,6 +7,9 @@
   <a href="https://www.linkedin.com/in/deepak-ahire-856534113/">
     <img src="https://img.shields.io/badge/ask%20me-anything-blue" alt="LinkedIn Profile">
   </a>
+  <a href="">
+    <img src="http://hits.dwyl.io/adeepak7/CCDSAP-Roadmap.svg" alt="Hit Counter">
+  </a>
 </p>
 A roadmap to crack Codechef Certified Data Structure and Algorithms Programme
 
