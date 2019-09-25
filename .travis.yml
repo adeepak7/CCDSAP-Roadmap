@@ -5,4 +5,5 @@ compiler:
 os:
 - linux
 script:
-- g++ -c Advance/*.cpp
+- cd Advance
+- g++ *.cpp > "OutputLogs.txt"
