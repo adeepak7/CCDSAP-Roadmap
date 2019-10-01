@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+    int t;
+    scanf("%d", &t);
+
+    int A=0,B=0, C=0;
+    int x, y, z;
+    while(t--){
+
+        scanf("%d %d %d", &x, &y, &z);
+
+        A+=x;
+        B+=y;
+        C+=z;
+    }
+
+    cout<<(((A==0) && (B==0) && (C==0)) ? "YES" : "NO") <<endl;
+    return 0;
+}
