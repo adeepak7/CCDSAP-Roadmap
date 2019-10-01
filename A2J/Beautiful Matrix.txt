@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int arr[6][6];
+
+typedef struct node{
+    
+    int x;
+    int y;
+    int d = -1;
+
+    bool operator < (const node& n)const{
+        
+        if(n.d < d){
+            return true;
+        }    
+        return false;
+    }
+    
+}node;
+
+priority_queue<node> que;
+
+bool visited[6][6];
+
+int dist[6][6];
+
+bool isValid(int x, int y){
+    
+    return (x>=0 && x<5 && y>=0 && y<5);    
+}
+
+inline void bfs(node source){
+
+    que.push(source);
+    
+    while(!que.empty()){
+        
+        node top = que.top();
+        que.pop();
+        
+        visited[top.x][top.y] = true;
+        
+        int i = top.x;
+        int j = top.y;
+        
+        if(isValid(i-1, j) && (!visited[i-1][j]) && (dist[i-1][j]>(dist[i][j]+1))){
+            dist[i-1][j] = dist[i][j]+1;
+            node p;
+            p.x = i-1;
+            p.y = j;
+            p.d = dist[i-1][j];
+            que.push(p);
+        }
+        
+        if(isValid(i, j+1) && (!visited[i][j+1]) && (dist[i][j+1]>(dist[i][j]+1))){
+            dist[i][j+1] = dist[i][j]+1;
+            node p;
+            p.x = i;
+            p.y = j+1;
+            p.d = dist[i][j+1];
+            que.push(p);
+        }
+        
+        if(isValid(i+1, j) && (!visited[i+1][j]) && (dist[i+1][j]>(dist[i][j]+1))){
+            dist[i+1][j] = dist[i][j]+1;
+            node p;
+            p.x = i+1;
+            p.y = j;
+            p.d = dist[i+1][j];
+            que.push(p);
+        }
+        
+        if(isValid(i, j-1) && (!visited[i][j-1]) && (dist[i][j-1]>(dist[i][j]+1))){
+            dist[i][j-1] = dist[i][j]+1;
+            node p;
+            p.x = i;
+            p.y = j-1;
+            p.d = dist[i][j-1];
+            que.push(p);
+        }
+    }
+}
+
+int main(){
+    
+    for(int i=0;i<5;i++){
+        
+        for(int j=0;j<5;j++){
+            
+            scanf("%d", &arr[i][j]);
+            visited[i][j] = false;
+            dist[i][j] = 100;
+        }
+    }    
+    
+    node source;
+    source.x = 2;
+    source.y = 2;
+    source.d = 0;
+    
+    dist[source.x][source.y] = 0;
+    
+    bfs(source);
+    
+    for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            
+            if(arr[i][j]){
+                cout<<dist[i][j];
+            }
+        }
+    }
+    
+    return 0;
+}
