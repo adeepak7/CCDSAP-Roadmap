@@ -1,0 +1,128 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long int LL;
+
+string A, B;
+int n;
+string arr;
+
+LL a, b, K;
+
+LL dp[20][180][2];
+
+bool isPrime[200] = {false};
+
+vector<int> vec;
+
+inline void init(){
+    
+    isPrime[2] = false;
+    vec.push_back(2);
+    for(int i=3;i<81;i++){
+        
+        bool p = true;
+        
+        for(int j=2;j<=sqrt(i);j++){
+            
+            if(i%j == 0){
+                p = false;
+                break;
+            }
+        }
+        
+        isPrime[i] = p;
+        if(p)vec.push_back(i);
+    }
+}
+
+inline LL digitDP(int index, LL sum, int edge){
+    
+    if(index >= n){
+        if(sum==K){
+            //cout<<"----->"<<sum<<endl;
+            return 1;
+        }
+        return 0;
+    }
+    
+    if(dp[index][sum][edge] != -1){
+        return dp[index][sum][edge];    
+    }
+    
+    LL ans = 0;
+    
+    int rightBound = (edge) ? (int)(arr[index]-48) : 9;
+    
+    for(int i=0; i<=rightBound; i++){
+        
+        int newEdge = (i==(int)(arr[index]-48)) ? edge : 0;
+        
+        ans += digitDP(index+1, sum+i, newEdge); 
+    }
+    
+    dp[index][sum][edge] = ans;
+    
+    return ans;
+}
+
+int main(){
+    
+    init();
+    
+    int t;
+    cin>>t;
+    
+    while(t--){
+        
+        cin>>a>>b;
+        
+        a--;
+        
+        A = to_string(a);
+        B = to_string(b);
+        
+        
+        arr = B;
+        n = arr.length();
+        LL ans2 = 0;
+        for(int i=0;i<vec.size();i++){
+            K = vec[i];
+            //cout<<K<<endl;
+            for(int i=0;i<20;i++){
+                for(int j=0;j<180;j++){
+                    for(int k=0;k<2;k++){
+                        dp[i][j][k] = -1;
+                    }
+                }
+            }    
+            ans2 += digitDP(0, 0, 1);
+        }
+        
+        
+        arr = A;
+        n = arr.length();
+        LL ans1 = 0;
+        
+        for(int i=0;i<vec.size();i++){
+            K = vec[i];
+            for(int i=0;i<20;i++){
+                for(int j=0;j<180;j++){
+                    for(int k=0;k<2;k++){
+                        dp[i][j][k] = -1;
+                    }
+                }
+            }
+            ans1 += digitDP(0, 0, 1);
+        }
+        
+        cout<<ans2-ans1<<endl;
+    }
+    
+    return 0;
+}
+
+
+
+
+

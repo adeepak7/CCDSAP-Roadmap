@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long int LL;
+
+LL dp[20][180][2];
+
+string A, B;
+string arr;
+int n;
+
+LL digitDP(int index, LL sum, int edge){
+    
+    //cout<<index<<" "<<sum<<" "<<edge<<endl;
+    
+    if(index >= n){
+        return sum;
+    }    
+    
+    if(dp[index][sum][edge] != -1){
+        return dp[index][sum][edge];
+    }
+    
+    LL ans = 0;
+    
+    int rightBound = (edge) ? (int)(arr[index]-48) : 9;
+    
+    for(int i=0;i<=rightBound;i++){
+        
+        int newEdge = (((int)(arr[index]-48) == i)) ? edge : 0;
+        
+        ans += digitDP(index+1, sum+(LL)i, newEdge);
+    }
+    
+    dp[index][sum][edge] = ans;
+    
+    return ans;
+}
+
+int main(){
+    
+    int t;
+    scanf("%d", &t);
+    
+    while(t--){
+        
+        
+        cin>>A>>B;
+        
+        for(int i=0;i<20;i++){
+            for(int j=0;j<180;j++){
+                for(int k=0;k<2;k++){
+                    dp[i][j][k] = -1;
+                }
+            }
+        }
+        
+        arr = B;
+        n = arr.length();
+        LL ans2 = digitDP(0, 0, 1); 
+        
+        //cout<<"-------------------------------------------------\n";
+        
+        for(int i=0;i<20;i++){
+            for(int j=0;j<180;j++){
+                for(int k=0;k<2;k++){
+                    dp[i][j][k] = -1;
+                }
+            }
+        }
+        LL a = stoll(A);
+        a--;
+        if(a<0){
+            a = 0; 
+        }
+        A = to_string(a);
+        arr = A;
+        n = arr.length();
+        LL ans1 = digitDP(0, 0, 1); 
+        
+        //cout<<ans1<<" "<<ans2<<endl;
+        
+        printf("%lld\n", ans2-ans1);
+        
+    }
+    
+    return 0;
+}
