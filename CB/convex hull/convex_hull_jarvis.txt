@@ -1,0 +1,133 @@
+// Codechef: https://www.codechef.com/problems/CF224
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef struct point{
+    
+    int x;
+    int y;
+    
+    bool operator < (const  point& p)const{
+        
+        if(p.x < x){
+            
+            return true;
+        }else if( (p.x==x) && (p.y < y)){
+            
+            return true;
+        }
+        return false;
+    }
+    
+}point;
+
+point arr[10001];
+
+queue<point> ans;
+
+int orientation(point p, point q, point r){
+    
+    int val = (r.y-q.y)*(q.x-p.x) - (q.y-p.y)*(r.x-q.x);
+    
+    if(val == 0) return 0;
+    
+    return (val > 0) ? 1 : 2;
+}
+
+void convexHull(int n){
+
+    while(!ans.empty()){
+        ans.pop();
+    }
+    
+    if(n<3)return;
+    
+    int l = 0;
+    
+    for(int i=1;i<n;i++){
+        
+        if(arr[l].x < arr[i].x){
+            l = i;
+        }
+    }
+    
+    int p = l, q;
+    
+    do{
+        
+        ans.push(arr[p]);
+        
+        q = (p+1)%n;
+        
+        for(int i=0;i<n;i++){
+            
+            if(orientation(arr[p], arr[i], arr[q]) == 1){
+                q = i;
+            }
+        }
+        
+        p = q;
+            
+    }while(p!=l);
+    
+}
+
+int main() { 
+        
+    int t=1;
+    //scanf("%d", &t);
+    
+    int c = 1;
+    
+    while(t--){
+    
+        int k;
+        scanf("%d", &k);
+
+        int x,y;
+
+        for(int i=0;i<k;i++){
+
+            scanf("%d %d", &x, &y);
+
+            point p;
+            p.x = x;
+            p.y = y;
+
+            arr[i] = p;
+        }
+
+        convexHull(k);
+
+        //cout<<"Case #"<<c++<<endl;
+        
+        //if(ans.size() == 0)cout<<-1<<endl;
+
+        vector<point> v;
+        
+        while(!ans.empty()){
+
+            point p = ans.front();
+            ans.pop();
+            v.push_back(p);
+        }
+        
+        double aa = 0;
+        
+        for(int i=0;i<v.size();i++){
+            
+            point p1 = v[i];
+            point p2 = v[(i+1)%v.size()];
+            
+            aa += sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
+        }
+        
+        printf("%.1lf\n", aa);
+    }
+    
+    return 0;
+}
+
+
+
