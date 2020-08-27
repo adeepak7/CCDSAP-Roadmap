@@ -36,7 +36,7 @@
 		
 	- Greedy algorithm and mechanical explanation
 	- Proof of Induction
-	- Time complexity : V + E*log(V) => log(V) for insert and decrease key
+	- Time complexity : V + E*log(V) where log(V) for insert and decrease key
 		- Now, can this time complexity be further improved
 	- Applications
 
