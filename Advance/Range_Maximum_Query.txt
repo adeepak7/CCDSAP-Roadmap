@@ -1,0 +1,80 @@
+//CB DCB Pundhird and the peak element
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int arr[1000001];
+int block[1001];
+int block_size;
+
+void initialize(int n){
+
+    block_size = (int)floor(sqrt(double(n))) ;
+
+    for(int i=0;i<n;i++){
+        block[i/block_size] = max(block[i/block_size], arr[i]);
+    }
+}
+
+int query(int l, int r){
+
+    int maximum_element = INT_MIN;
+
+    while(l<r && l!=0 && l%block_size!=0){
+        maximum_element = max(maximum_element, arr[l]);
+        l++;
+    }
+
+    while(l + block_size < r){
+
+        maximum_element = max(maximum_element, block[l/block_size]);
+        l += block_size;
+    }
+
+    while(l<=r){
+        maximum_element = max(maximum_element, arr[l]);
+        l++;
+    }
+
+    return maximum_element;
+} 
+
+void RMQ(int n){
+
+    initialize(n);
+
+}
+
+int main(){
+
+    int n;
+    scanf("%d", &n);
+
+    int r;
+    scanf("%d", &r);
+
+    for(int i=0;i<n;i++){
+
+        scanf("%d", &arr[i]);
+    }
+
+    RMQ(n);
+
+    //cout<<"Check1"<<endl;
+
+    int ans = 0;
+
+    for(int i=0;i<n;i++){
+
+        int L = (i-r >= 0) ? i-r : 0;
+        int R = (i+r <= n-1) ? i+r : n-1;
+
+        ans += (query(L, R) <= arr[i]) ? 1:0;
+
+        //cout<<"Ans: "<<ans<<endl;
+    }
+
+    printf("%d\n", ans);
+
+    return 0;
+}
