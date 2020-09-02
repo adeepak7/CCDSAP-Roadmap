@@ -14,8 +14,8 @@
     <img src="https://img.shields.io/badge/slack-@acses-yellow.svg?logo=slack" alt="Join the chat on Slack">
   </a>  
 </p>
+
+<br />
 A roadmap to crack Codechef Certified Data Structure and Algorithms Programme
-
-</br>
-
+<br />
 Codechef Certified Data Structures and Algorithm Programme certification is an assessment of programming proficiency in Data Structures and Algorithms under a proctored environment. It’s a lifetime certification as it tests a programmers grasp on subjects that are very fundamental to the field of computer science, and therefore, they do not change with technological advancements.
