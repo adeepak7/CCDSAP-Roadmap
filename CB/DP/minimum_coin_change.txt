@@ -1,0 +1,54 @@
+
+// GFG
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int arr[1000001];
+int dp[1000001];
+
+int main() {
+    
+    int t;
+    cin>>t;
+    
+    while(t--){
+        
+        int n, sum;
+        cin>>sum>>n;
+
+        for(int i=0;i<n;i++){
+            cin>>arr[i];
+        }
+
+        dp[0] = 0;
+
+        for(int i=1;i<=sum;i++){
+
+            int ans = INT_MAX - 10;
+
+            for(int j=0;j<n;j++){
+
+                if(i-arr[j] >=0 ){
+
+                    ans = min(ans, dp[i-arr[j]]);
+
+                }else{
+                    break;
+                }
+            }
+            
+            dp[i] = ans + 1;
+
+        }
+
+        if(dp[sum] == INT_MAX-9)
+            cout<<-1<<endl;
+        else
+            cout<<dp[sum]<<endl;
+    }    
+    return 0;
+}
+
+

@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long int LL;
+
+
+LL dp[1001][1001];
+vector<int> vec;
+const LL mod = (1e9) + 7LL;
+
+LL func(int sum, int k){
+
+    if(k<0 || sum<0){
+        return 0;
+    }
+
+    if(sum == 0){
+        return 1;
+    }
+
+    if(dp[sum][k] != -1){
+
+        return dp[sum][k];
+    }
+
+    LL x = 0;
+    LL y = 0;
+
+    if(sum-vec[k] >= 0){
+
+        x = func(sum-vec[k], k);
+    }
+
+    y = func(sum, k-1);
+
+    dp[sum][k] = (x+y);
+
+    return dp[sum][k];
+}
+
+int main(){
+
+    int sum, k;
+    cin>>sum>>k;    
+
+    for(int i=0;i<k;i++){
+
+        int x;
+        cin>>x;
+
+        vec.push_back(x);
+    }
+
+    sort(vec.begin(), vec.end());
+
+    for(int i=0;i<=sum;i++){
+        for(int j=0;j<=k;j++){
+            dp[i][j] = -1;
+        }
+    }
+
+    cout<<func(sum, k-1);
+
+    return 0;
+}
+

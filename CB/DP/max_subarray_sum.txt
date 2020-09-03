@@ -1,0 +1,60 @@
+//Hackerrank:
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long int LL;
+
+LL dp[1000001];
+
+LL arr[1000001];
+
+int main(){
+
+    int t;
+    cin>>t;
+
+    while(t--){
+
+        int n;
+        cin>>n;
+
+        for(int i=1;i<=n;i++){
+            cin>>arr[i];
+        }
+
+        for(int i=1;i<=n;i++){
+
+            //I dont care where the max subarray starts,
+            //but I care where it ends.
+
+            /*
+                Therefore for taking decision on index, the only
+                thing matters to me is the max sum ending at previous index.
+
+                So, I can extend that sum by adding current element or start a 
+                new subarray , startign and ending at this same index. 
+            */
+            dp[i] = max(dp[i-1] + arr[i], arr[i]);
+        }
+
+        //finding max of all indices in dp array:
+        LL ans = dp[1];
+
+        for(int i=2;i<=n;i++){
+            ans = max(ans, dp[i]);
+        }
+
+        cout<<ans<<" ";
+
+        LL sum = arr[1];
+
+        for(int i=2;i<=n;i++){
+
+            sum = max(sum, max(arr[i], sum+arr[i]));
+        }
+
+        cout<<sum<<endl;
+    }
+    return 0;
+}

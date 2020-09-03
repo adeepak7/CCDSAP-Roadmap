@@ -1,0 +1,67 @@
+// Hackerrank: https://www.hackerrank.com/contests/hashinclude/challenges/the-wine-shop
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int arr[1000001];
+
+typedef long long int LL;
+
+LL dp[1001][1001];
+
+int N;
+
+LL maxf(LL a, LL b){
+    
+    return (a>b) ? (a) : (b);
+}
+
+LL func(int i, int j){
+    
+    if(i>j){
+        return 0;
+    }
+    
+    LL costForDay = (N+1) - (j-i+1);
+    
+    if(dp[i][j] != -1){
+        
+        return dp[i][j];
+    }
+    
+    LL a = func(i+1, j) + costForDay * (LL)arr[i];
+    
+    LL b = func(i, j-1) + costForDay * (LL)arr[j];
+    
+    dp[i][j] = maxf(dp[i][j], maxf(a, b));
+    
+    return dp[i][j];
+}
+
+int main() {
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */    
+    
+    
+    scanf("%d", &N);
+    
+    for(int i=0;i<=N;i++){
+        for(int j=0;j<=N;j++){
+            dp[i][j] = -1;
+        }
+    }
+    
+    for(int i=1;i<=N;i++){
+        
+        scanf("%d", &arr[i]);
+    }
+    
+    printf("%lld\n", func(1, N));
+    
+    return 0;
+}
+
+ 
+

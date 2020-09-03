@@ -1,0 +1,63 @@
+//Coding blocks
+
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long int LL;
+
+LL dp[1000001];
+
+int m;
+
+LL mod = (LL)((LL)1e9 + 7LL);
+
+LL func(int n){
+
+    if(n==0){
+        return 0;
+    }
+
+    if(n==1){
+        return 1;
+    }
+
+    if(n==m){
+        return 2;
+    }
+
+    if(dp[n] != -1){
+        
+        return dp[n];
+    }
+
+    LL x = func(n-1);
+
+    LL y = 0;
+
+    if(n>m){
+        y = func(n-m);
+    }
+
+    dp[n] = (x+y)%mod;
+
+    return dp[n];
+}
+
+int main() {
+
+    int t;
+    cin>>t;
+
+    while(t--){
+
+        int n;
+        cin>>n>>m;
+
+        memset(dp, -1, sizeof(dp));
+
+        LL ans = func(n);
+
+        cout<<ans<<endl;
+    }
+	return 0;
+}
