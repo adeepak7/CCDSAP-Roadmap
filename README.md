@@ -11,7 +11,7 @@
     <img src="http://hits.dwyl.io/adeepak7/CCDSAP-Roadmap.svg" alt="Hit Counter">
   </a>
   <a href="https://join.slack.com/t/newworkspace-4jf9822/shared_invite/zt-h5ia5j3p-rmTC8wwR7fXzRVfTNlIoFA">
-    <img src="https://img.shields.io/badge/slack-@acses-yellow.svg?logo=slack" alt="Join the chat on Slack">
+    <img src="https://img.shields.io/badge/slack-@ccdsap_roadmap-yellow.svg?logo=slack" alt="Join the chat on Slack">
   </a>  
 </p>
 
