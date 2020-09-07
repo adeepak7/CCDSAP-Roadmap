@@ -28,5 +28,12 @@ Codechef Certified Data Structures and Algorithm Programme certification is an a
 
 ## Sponsors
 
-<a href="https://www.1password.com/?from=github.com/adeepak7/CCDSAP-Roadmap">
-    <img src="https://github.com/adeepak7/CCDSAP-Roadmap/blob/master/docs/assets/1password.png?raw=true" alt="1build" width="300"></a>
+
+<span>
+  
+  <a href="https://www.1password.com/?from=github.com/adeepak7/CCDSAP-Roadmap">
+      <img src="https://github.com/adeepak7/CCDSAP-Roadmap/blob/master/docs/assets/1password.png?raw=true" alt="1build" width="300"></a>
+  
+  <a href="https://slack.com/intl/en-in/?from=github.com/adeepak7/CCDSAP-Roadmap">
+      <img src="https://github.com/adeepak7/CCDSAP-Roadmap/blob/master/docs/assets/1password.png?raw=true" alt="1build" width="300"></a>
+</span>
