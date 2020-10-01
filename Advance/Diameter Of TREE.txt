@@ -1,0 +1,55 @@
+/* Tree node structure  used in the program
+ struct Node
+ {
+     int data;
+     Node* left, *right;
+}; */
+
+int ans=0;
+int data=-1;
+int flg=0;
+Node* root;
+
+int diameter1(Node* node)
+{
+       if(flg=0){
+           root = node;
+           flg=1;
+       }
+       
+       if(node==NULL){
+           return 0;
+       }
+       
+       if(node->left==NULL  && node->right==NULL){
+           return 1;
+       }
+       
+       int rh = diameter1(node->right);
+       int lh = diameter1(node->left);
+       
+       
+       int nh = max(rh,lh)+1;
+       
+       //cout<<"AA:"<<rh+lh+1<<endl;
+       
+       ans = max(ans,max(nh,max(rh+lh+1,max(rh+1,lh+1))));
+       
+     
+     if(node!=root){
+        return nh;
+     }
+       
+}
+
+int diameter(Node* node)
+{
+           root=NULL;
+            ans=0;
+           data=-1;
+           flg=0;
+     
+     diameter1(node);
+     
+     return ans;
+}
