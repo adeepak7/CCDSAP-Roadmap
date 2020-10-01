@@ -1,0 +1,67 @@
+int minElementGreaterThanOrEqualToKey(int A[], int key,int imin, int imax)
+{
+    if(A[imax] < key || imax<imin){
+        return -1;
+    }
+    
+    if(A[imin] >= key){
+        return imin;
+    }
+    
+    while(imin < imax){
+        
+        int imid = imin  + (imax - imin)/2;
+        
+        if(A[imid] < key){
+            imin = imid+1;
+        }
+        else{
+            imax = imid;
+        }
+    }
+    
+    if(imax == imin  &&  A[imin]>=key){
+        return imax;
+    }else{
+        return -1;
+    }
+}
+ 
+int greatestIndexNotExceeding(int A[], int key, int imin, int imax) {
+    
+    if(A[imax] <= key){
+        return imax;
+    }
+    
+    if(imin>imax || A[imin]>key){
+        return -1;
+    }
+    
+    while(imin < imax){
+        
+        int imid = (imin+imax)/2;
+        
+        
+        if(A[imid] <= key){
+            if(A[imid+1] <= key){
+                imin = imid+1;
+            }else{
+                imin = imid;
+            }
+        }else{
+            imax = imid;
+        }
+        
+        if(A[imin]<=key && A[imin+1]>key){
+            return imin;
+        }
+        
+    }
+    
+    if(imin==imax  && A[imin]<=key){
+        return imax;
+    }else{
+        return -1;
+    }
+    
+}
